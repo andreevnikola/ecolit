@@ -32,6 +32,7 @@ const bodyFont = createInterFont();
 export const Container = styled(YStack, {
   flex: 1,
   padding: 24,
+  backgroundColor: '$background',
 });
 
 export const Main = styled(YStack, {
@@ -41,21 +42,27 @@ export const Main = styled(YStack, {
 });
 
 export const Title = styled(H1, {
-  color: '#000',
+  color: '$text',
   size: '$12',
 });
 
 export const Subtitle = styled(SizableText, {
-  color: '#38434D',
+  color: '$textShade',
   size: '$9',
 });
 
 export const Button = styled(YStack, {
   alignItems: 'center',
-  backgroundColor: '#6366F1',
+  backgroundColor: '$primary',
   borderRadius: 28,
   hoverStyle: {
-    backgroundColor: '#5a5fcf',
+    backgroundColor: '$primaryHover',
+  },
+  focusStyle: {
+    backgroundColor: '$primaryFocus',
+  },
+  pressStyle: {
+    backgroundColor: '$primaryPress',
   },
   justifyContent: 'center',
   maxWidth: 500,
@@ -67,23 +74,77 @@ export const Button = styled(YStack, {
   },
   shadowOpacity: 0.25,
   shadowRadius: 3.84,
+  variants: {
+    colors: {
+      primary: {
+        hoverStyle: {
+          backgroundColor: '$primaryHover',
+        },
+        focusStyle: {
+          backgroundColor: '$primaryFocus',
+        },
+        pressStyle: {
+          backgroundColor: '$primaryPress',
+        },
+        backgroundColor: '$primary',
+      },
+      secondary: {
+        hoverStyle: {
+          backgroundColor: '$secondaryHover',
+        },
+        focusStyle: {
+          backgroundColor: '$secondaryFocus',
+        },
+        pressStyle: {
+          backgroundColor: '$secondaryPress',
+        },
+        backgroundColor: '$secondary',
+      },
+      accent: {
+        hoverStyle: {
+          backgroundColor: '$accentHover',
+        },
+        focusStyle: {
+          backgroundColor: '$accentFocus',
+        },
+        pressStyle: {
+          backgroundColor: '$accentPress',
+        },
+        backgroundColor: '$accent',
+      },
+    },
+    roundness: {
+      circular: {
+        borderRadius: 28,
+      },
+      small: {
+        borderRadius: 10,
+      },
+      none: {
+        borderRadius: 0,
+      },
+    },
+    hasShadow: {
+      true: {
+        shadowOpacity: 0.25,
+      },
+      false: {
+        shadowOpacity: 0,
+      },
+    },
+  },
 });
 
 export const ButtonText = styled(SizableText, {
-  color: '#FFFFFF',
+  color: '$text',
   fontSize: 16,
   fontWeight: '600',
   textAlign: 'center',
 });
 
 const config = createTamagui({
-  light: {
-    color: {
-      background: 'gray',
-      text: 'black',
-    },
-  },
   defaultFont: 'body',
+  defaultTheme: 'darkEcoLit',
   animations,
   shouldAddPrefersColorThemes: true,
   themeClassNameOnRoot: true,
@@ -92,7 +153,68 @@ const config = createTamagui({
     body: bodyFont,
     heading: headingFont,
   },
-  themes,
+  themes: {
+    lightEcoLit: {
+      background: '#F0FFFE',
+      backgroundShade: '#e4eded',
+      backgroundTransparent: 'rgba(240, 255, 254, 0.59)',
+      borderColor: '#cbd4d3',
+      borderColorFocus: '#cbd4d3',
+      borderColorHover: '#cbd4d3',
+      borderColorPress: '#cbd4d3',
+      primary: '#5B7E4E',
+      primaryFocus: '#4d6e41',
+      primaryHover: '#517345',
+      primaryPress: '#446139',
+      primaryTransparent: 'rgba(91, 126, 78, 0.6)',
+      placeholderPrimary: '#5B7E4E',
+      secondary: '#BA9E73',
+      secondaryFocus: '#b0946a',
+      secondaryHover: '#b59b72',
+      secondaryPress: '#a88e67',
+      secondaryTransparent: 'rgba(186, 158, 115, 0.6)',
+      placeholderSecondary: '#BA9E73',
+      accent: '#776E26',
+      accentFocus: '#61591b',
+      accentHover: '#6b6320',
+      accentPress: '#544e18',
+      accentTransparent: 'rgba(119, 110, 38, 0.6)',
+      placeholderAccent: '#776E26',
+      text: '#050316',
+      textShade: '#1c1c21',
+      placeholderColor: '#050316',
+    },
+    darkEcoLit: {
+      background: '#101818',
+      backgroundShade: '#1c2626',
+      backgroundTransparent: 'rgba(16, 24, 24, 0.59)',
+      borderColor: '#192121',
+      borderColorFocus: '#192121',
+      borderColorHover: '#192121',
+      borderColorPress: '#192121',
+      primary: '#5B7E4E',
+      primaryFocus: '#4d6e41',
+      primaryHover: '#517345',
+      primaryPress: '#446139',
+      primaryTransparent: 'rgba(91, 126, 78, 0.6)',
+      placeholderPrimary: '#5B7E4E',
+      secondary: '#BA9E73',
+      secondaryFocus: '#b0946a',
+      secondaryHover: '#b59b72',
+      secondaryPress: '#a88e67',
+      secondaryTransparent: 'rgba(186, 158, 115, 0.6)',
+      placeholderSecondary: '#BA9E73',
+      accent: '#776E26',
+      accentFocus: '#61591b',
+      accentHover: '#6b6320',
+      accentPress: '#544e18',
+      accentTransparent: 'rgba(119, 110, 38, 0.6)',
+      placeholderAccent: '#776E26',
+      text: '#EAE9FC',
+      textShade: '#aeaebd',
+      placeholderColor: '#EAE9FC',
+    },
+  },
   tokens,
   media: createMedia({
     xs: { maxWidth: 660 },
