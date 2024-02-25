@@ -1,7 +1,7 @@
 import { Stack, Link } from 'expo-router';
 import { YStack } from 'tamagui';
 
-import { Container, Main, Title, Subtitle, Button, ButtonText } from '../tamagui.config';
+import { Container, Main, Title, Subtitle, StyledButton, ButtonText } from '../tamagui.config';
 
 export default function Page() {
   return (
@@ -12,10 +12,10 @@ export default function Page() {
           <Title fontWeight={'$16'}>EcoLit</Title>
           <Subtitle>Добре дошъл в нашата апликация.</Subtitle>
         </YStack>
-        <Link href={{ pathname: '/signin' }} asChild>
-          <Button colors="accent">
+        <Link href={{ pathname: '/auth/signin' }} asChild>
+          <StyledButton colors="accent">
             <ButtonText>Впиши се</ButtonText>
-          </Button>
+          </StyledButton>
         </Link>
       </Main>
     </Container>
