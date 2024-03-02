@@ -6,9 +6,6 @@ import { Container, Main, Title, Subtitle, StyledButton, ButtonText } from '~/ta
 import { supabase } from '~/utils/supabase';
 
 export default function HomePage() {
-  const { user } = useUser();
-  console.log(user);
-
   return (
     <Container>
       <Main>

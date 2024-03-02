@@ -18,8 +18,6 @@ export default function onOpenScripts({
   const {
     data: { subscription: authSateChangeSubscription },
   } = supabase.auth.onAuthStateChange((event, session) => {
-    // console.log(event, session);
-
     structurerAndSetter(session?.user || null);
 
     // if (event === 'INITIAL_SESSION') {

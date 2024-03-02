@@ -6,6 +6,9 @@ import { TamaguiProvider, Theme, View, useTheme } from 'tamagui';
 import config from '../tamagui.config';
 import { useColorScheme } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import onOpenScripts from '~/utils/onOpenScripts';
+import { useUserStore } from '~/stores/userStore';
+import onExitScripts from '~/utils/onExitScripts';
 
 export const StylizedStack = ({ children }: { children?: React.ReactNode }) => {
   const theme = useTheme();
@@ -36,11 +39,19 @@ export default function Layout() {
 
   const colorScheme = useColorScheme();
 
+  const structurerAndSetterForUser = useUserStore((state) => state.structureAndSetUser);
+
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
     }
   }, [loaded]);
+
+  useEffect(() => {
+    const subscriptions = onOpenScripts({ structurerAndSetter: structurerAndSetterForUser });
+
+    return () => onExitScripts(subscriptions);
+  }, []);
 
   if (!loaded) return null;
 

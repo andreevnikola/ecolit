@@ -34,7 +34,7 @@ export default function Auth() {
         router.push(`/auth/email-verification-sent?email=${email}`);
       return;
     }
-    router.push('/');
+    router.replace('/');
   }
 
   return (

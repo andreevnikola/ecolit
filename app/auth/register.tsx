@@ -52,7 +52,7 @@ export default function Auth() {
       return;
     }
     if (!session) router.push(`/auth/email-verification-sent?email=${email}`);
-    else router.push('/');
+    else router.replace('/');
   }
 
   return (
