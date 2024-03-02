@@ -9,6 +9,8 @@ import { Ionicons } from '@expo/vector-icons';
 import onOpenScripts from '~/utils/onOpenScripts';
 import { useUserStore } from '~/stores/userStore';
 import onExitScripts from '~/utils/onExitScripts';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import BottomSheetLib from '~/components/BottomSheet';
 
 export const StylizedStack = ({ children }: { children?: React.ReactNode }) => {
   const theme = useTheme();
@@ -58,10 +60,13 @@ export default function Layout() {
   return (
     <TamaguiProvider config={config}>
       <Theme name={colorScheme === 'dark' ? 'darkEcoLit' : 'lightEcoLit'}>
-        <StylizedStack>
-          <Stack.Screen name="(app)" options={{ headerShown: false }} />
-          <Stack.Screen name="auth" options={{ headerShown: false }} />
-        </StylizedStack>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <StylizedStack>
+            <Stack.Screen name="(app)" options={{ headerShown: false }} />
+            <Stack.Screen name="auth" options={{ headerShown: false }} />
+          </StylizedStack>
+          <BottomSheetLib />
+        </GestureHandlerRootView>
       </Theme>
     </TamaguiProvider>
   );

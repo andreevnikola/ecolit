@@ -4,6 +4,7 @@ import { Redirect, Tabs } from 'expo-router';
 import { Avatar, useTheme } from 'tamagui';
 import useUser from '~/hooks/useUser';
 import { IUser } from '~/types/user';
+import UserProfileIcon from '~/components/userProfile/UserProfileIcon';
 
 export const StylyzedTabs = ({
   children,
@@ -30,12 +31,7 @@ export const StylyzedTabs = ({
           borderBlockColor: theme.backgroundTint.get(),
         },
         tabBarActiveTintColor: theme.accent.get(),
-        headerRight: ({ tintColor }) => (
-          <Avatar circular size="$3" mt={-5} mr={7}>
-            <Avatar.Image src={avatarUrl} />
-            <Avatar.Fallback bc="$backgroundTint" />
-          </Avatar>
-        ),
+        headerRight: ({ tintColor }) => <UserProfileIcon avatarUrl={avatarUrl} />,
       }}>
       {children}
     </Tabs>
@@ -44,9 +40,6 @@ export const StylyzedTabs = ({
 
 export default function AppLayout() {
   const { isLoading, user } = useUser();
-
-  console.log(user);
-  console.log(isLoading);
 
   if (!isLoading && !user) return <Redirect href={'/auth/getting-started'} />;
 
