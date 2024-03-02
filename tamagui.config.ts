@@ -3,7 +3,9 @@ import { createInterFont } from '@tamagui/font-inter';
 import { createMedia } from '@tamagui/react-native-media-driver';
 import { shorthands } from '@tamagui/shorthands';
 import { themes, tokens } from '@tamagui/themes';
-import { createTamagui, styled, SizableText, H1, YStack, XStack } from 'tamagui';
+import { createTamagui, styled, SizableText, H1, YStack, XStack, Text } from 'tamagui';
+
+const NativeText = Text;
 
 const animations = createAnimations({
   bouncy: {
@@ -52,6 +54,42 @@ export const Subtitle = styled(SizableText, {
   size: '$9',
 });
 
+export const Strong = styled(NativeText, {
+  fontWeight: 'bold',
+});
+
+export const Href = styled(NativeText, {
+  fontSize: '$5',
+  textAlign: 'center',
+  color: '$primary',
+  textDecorationLine: 'none',
+  textDecorationColor: '$primary',
+  variants: {
+    isUnderlined: {
+      true: {
+        textDecorationLine: 'underline',
+      },
+      false: {
+        textDecorationLine: 'none',
+      },
+    },
+    colors: {
+      primary: {
+        color: '$primary',
+        textDecorationColor: '$primary',
+      },
+      secondary: {
+        color: '$secondary',
+        textDecorationColor: '$secondary',
+      },
+      accent: {
+        color: '$accent',
+        textDecorationColor: '$accent',
+      },
+    },
+  },
+});
+
 export const StyledButton = styled(XStack, {
   alignItems: 'center',
   backgroundColor: '$primary',
@@ -76,6 +114,12 @@ export const StyledButton = styled(XStack, {
   shadowOpacity: 0.25,
   shadowRadius: 3.84,
   variants: {
+    disabled: {
+      true: {
+        backgroundColor: '$neutral',
+      },
+      false: {},
+    },
     colors: {
       primary: {
         hoverStyle: {
@@ -157,6 +201,7 @@ const config = createTamagui({
   },
   themes: {
     lightEcoLit: {
+      neutral: '#bccfcd',
       background: '#F0FFFE',
       backgroundShade: '#e4eded',
       backgroundTransparent: 'rgba(240, 255, 254, 0.59)',
@@ -184,9 +229,16 @@ const config = createTamagui({
       placeholderAccent: '#776E26',
       text: '#050316',
       textShade: '#1c1c21',
-      placeholderColor: '#050316',
+      color: '#050316',
+      colorFocus: '#eeedfa',
+      colorHover: '#1c1c21',
+      colorPress: '#000000',
+      colorTransparent: 'rgba(234, 233, 252, 0.5)',
+      placeholderColor: '#4e4e52',
+      transparent: 'rgba(234, 233, 252, 0)',
     },
     darkEcoLit: {
+      neutral: '#343d3d',
       background: '#101818',
       backgroundShade: '#1c2626',
       backgroundTransparent: 'rgba(16, 24, 24, 0.59)',
@@ -214,7 +266,13 @@ const config = createTamagui({
       placeholderAccent: '#776E26',
       text: '#EAE9FC',
       textShade: '#aeaebd',
-      placeholderColor: '#EAE9FC',
+      color: '#EAE9FC',
+      colorFocus: '#eeedfa',
+      colorHover: '#EAE9FC',
+      colorPress: '#f0f0fa',
+      colorTransparent: 'rgba(234, 233, 252, 0.5)',
+      placeholderColor: '#c7c7c7',
+      transparent: 'rgba(234, 233, 252, 0)',
     },
   },
   tokens,
