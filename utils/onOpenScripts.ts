@@ -20,19 +20,20 @@ export default function onOpenScripts({
   } = supabase.auth.onAuthStateChange((event, session) => {
     // console.log(event, session);
 
-    if (event === 'INITIAL_SESSION') {
-      structurerAndSetter(session?.user || null);
-    } else if (event === 'SIGNED_IN') {
-      // handle sign in event
-    } else if (event === 'SIGNED_OUT') {
-      // handle sign out event
-    } else if (event === 'PASSWORD_RECOVERY') {
-      // handle password recovery event
-    } else if (event === 'TOKEN_REFRESHED') {
-      // handle token refreshed event
-    } else if (event === 'USER_UPDATED') {
-      // handle user updated event
-    }
+    structurerAndSetter(session?.user || null);
+
+    // if (event === 'INITIAL_SESSION') {
+    // } else if (event === 'SIGNED_IN') {
+    //   // handle sign in event
+    // } else if (event === 'SIGNED_OUT') {
+    //   // handle sign out event
+    // } else if (event === 'PASSWORD_RECOVERY') {
+    //   // handle password recovery event
+    // } else if (event === 'TOKEN_REFRESHED') {
+    //   // handle token refreshed event
+    // } else if (event === 'USER_UPDATED') {
+    //   // handle user updated event
+    // }
   });
 
   return [authSateChangeSubscription];

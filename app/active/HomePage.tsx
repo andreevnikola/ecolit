@@ -1,9 +1,6 @@
-import { Stack, Link } from 'expo-router';
+import { Stack } from 'expo-router';
 import { YStack } from 'tamagui';
-import useUser from '~/hooks/useUser';
-
-import { Container, Main, Title, Subtitle, StyledButton, ButtonText } from '~/tamagui.config';
-import { supabase } from '~/utils/supabase';
+import { Container, Main, Title, Subtitle } from '~/tamagui.config';
 
 export default function HomePage() {
   const user = useUser();
