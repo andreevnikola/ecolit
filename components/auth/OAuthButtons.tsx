@@ -76,7 +76,7 @@ export default function OAUthButtons() {
       console.log(res);
       const session = await createSessionFromUrl(url);
       if (session) {
-        router.push('/active/home');
+        router.push('/');
       }
     }
   };

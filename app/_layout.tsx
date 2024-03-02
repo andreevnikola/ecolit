@@ -7,7 +7,7 @@ import config from '../tamagui.config';
 import { useColorScheme } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const StylizedStack = () => {
+export const StylizedStack = ({ children }: { children?: React.ReactNode }) => {
   const theme = useTheme();
 
   return (
@@ -22,8 +22,9 @@ const StylizedStack = () => {
           color: theme.text.get(),
         },
         headerBackTitleVisible: false,
-      }}
-    />
+      }}>
+      {children}
+    </Stack>
   );
 };
 
@@ -46,7 +47,10 @@ export default function Layout() {
   return (
     <TamaguiProvider config={config}>
       <Theme name={colorScheme === 'dark' ? 'darkEcoLit' : 'lightEcoLit'}>
-        <StylizedStack />
+        <StylizedStack>
+          <Stack.Screen name="(app)" options={{ headerShown: false }} />
+          <Stack.Screen name="auth" options={{ headerShown: false }} />
+        </StylizedStack>
       </Theme>
     </TamaguiProvider>
   );

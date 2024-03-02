@@ -4,12 +4,14 @@ import { IUser } from '~/types/user';
 
 interface IUserStore {
   user: IUser | null;
+  isLoading: boolean;
   setUser: (newUser: IUser | null) => void;
   structureAndSetUser: (rawUser: User | null) => void;
 }
 
 export const useUserStore = create<IUserStore>((set) => ({
   user: null,
+  isLoading: true,
   setUser: (newUser: IUser | null) => set({ user: newUser }),
   structureAndSetUser: (rawUser: User | null) =>
     set({
@@ -22,5 +24,6 @@ export const useUserStore = create<IUserStore>((set) => ({
             fullName: rawUser.user_metadata.full_name,
           }
         : null,
+      isLoading: false,
     }),
 }));
