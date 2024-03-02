@@ -9,6 +9,7 @@ const BottomSheetLib = () => {
 
   const isOpened = useBottomSheetStore((store) => store.isOpened);
   const content = useBottomSheetStore((store) => store.content);
+  const snapPoints = useBottomSheetStore((store) => store.snapPoints);
 
   const hide = useBottomSheetStore((store) => store.hideSheet);
 
@@ -26,7 +27,7 @@ const BottomSheetLib = () => {
       enablePanDownToClose={true}
       backgroundStyle={{ backgroundColor: theme.backgroundTint.get() }}
       handleIndicatorStyle={{ backgroundColor: theme.backgroundShade.get() }}
-      snapPoints={['35%']}
+      snapPoints={snapPoints}
       ref={bottomSheetRef}
       onChange={handleSheetChanges}>
       <BottomSheetView style={styles.contentContainer}>{content}</BottomSheetView>

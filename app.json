@@ -4,6 +4,8 @@
     "slug": "ecolit",
     "version": "1.0.0",
     "scheme": "com.ecolit",
+    "privacy": "public",
+    "description": "You get prices by recycling.",
     "web": {
       "bundler": "metro",
       "output": "static",
@@ -39,6 +41,20 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.ecolit.app"
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "cc7e4e08-bcee-47a3-a220-37bdbb098246"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/cc7e4e08-bcee-47a3-a220-37bdbb098246"
     }
   }
 }

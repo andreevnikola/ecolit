@@ -2,6 +2,7 @@ import { View, XGroup, YGroup, styled } from 'tamagui';
 import { Text } from 'tamagui';
 import useUser from '~/hooks/useUser';
 import { Strong } from '~/tamagui.config';
+import SignOutButton from '../auth/SignOutButton';
 
 const StyledText = styled(Text, {
   color: '$text',
@@ -45,10 +46,12 @@ export default function UserProfileSheetContent() {
             Баланс:
           </Text>
           <Text fontSize={30} color={'$primary'}>
-            <Strong>0</Strong>т
+            <Strong>0</Strong>
+            <Text fontSize={20}>т.</Text>
           </Text>
         </XGroup>
       </YGroup>
+      <SignOutButton />
     </View>
   );
 }
