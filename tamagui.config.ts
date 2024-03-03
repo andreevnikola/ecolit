@@ -31,6 +31,12 @@ const headingFont = createInterFont();
 
 const bodyFont = createInterFont();
 
+export const ErrorText = styled(NativeText, {
+  color: 'red',
+  fontSize: 20,
+  textAlign: 'center',
+});
+
 export const Container = styled(YStack, {
   flex: 1,
   padding: 24,

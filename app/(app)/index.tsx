@@ -1,9 +1,43 @@
 import { View, YStack, styled } from 'tamagui';
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
-import { Alert } from 'react-native';
-import { useEffect, useState } from 'react';
-import { Dimensions } from 'react-native';
+import { Alert, AppState, BackHandler } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '~/utils/supabase';
+import { ILocation } from '~/types/location';
+import MapMarker from '~/components/MapMarker';
+
+import { ErrorText } from '~/tamagui.config';
+
+const fetchLocations = async (): Promise<ILocation[]> => {
+  const { data, error } = await supabase
+    .from('locations')
+    .select(
+      `
+    id,
+    latitude,
+    longitude,
+    type,
+    place_info (
+      image_url,
+      name,
+      description,
+      website,
+      logo_url
+    )
+  `
+    )
+    .returns<ILocation[]>();
+
+  if (error) {
+    console.log(error.message);
+    throw error;
+  }
+
+  return data;
+};
 
 const StyledMapView = styled(MapView, {
   width: '100%',
@@ -16,20 +50,47 @@ export default function MapPage() {
     lng: 0,
   });
 
+  const [canAskAgain, setCanAskAgain] = useState(true);
+
+  const hasRefetched = useRef(false);
+
+  const { isLoading, isError, data, error, refetch } = useQuery({
+    queryKey: ['locations'],
+    queryFn: fetchLocations,
+  });
+
+  if (isError && !hasRefetched) refetch();
+  if (isError && hasRefetched)
+    Alert.alert('Не успхме да заредим локациите. Моля опитайте пак по-късно!');
+
   useEffect(() => {
+    let retried = false;
     const askPermission = async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
+      let { status, canAskAgain } = await Location.requestForegroundPermissionsAsync();
+      if (!canAskAgain) {
+        setCanAskAgain(false);
+        return false;
+      }
       if (status !== 'granted') {
         Alert.alert(
           'Трябва да ни разрешите достъп до локацията Ви за да можете да ползвате апликацията ни!'
         );
-        askPermission();
+        if (!retried) {
+          retried = true;
+          askPermission();
+        } else {
+          setCanAskAgain(false);
+          return false;
+        }
       }
+      return true;
     };
 
     (async () => {
       const permissions = await Location.getForegroundPermissionsAsync();
-      if (!permissions.granted) await askPermission();
+      let isGranted = permissions.granted;
+      if (!isGranted) isGranted = await askPermission();
+      if (!isGranted) return;
       let location = await Location.getCurrentPositionAsync({});
       setCoords({
         lat: location.coords.latitude,
@@ -38,25 +99,50 @@ export default function MapPage() {
     })();
   }, []);
 
-  if (coords.lat === 0 && coords.lng === 0) return <></>;
+  if (!canAskAgain)
+    return (
+      <View
+        flex={1}
+        backgroundColor={'$background'}
+        justifyContent="center"
+        alignItems="center"
+        padding={10}>
+        <ErrorText>
+          Отворете настройките си и ни разрешете достъп до локацията Ви за да продължите!
+        </ErrorText>
+      </View>
+    );
+
+  if (coords.lat === 0 && coords.lng === 0)
+    return <View flex={1} backgroundColor={'$background'} />;
 
   return (
-    <View flex={1}>
+    <View flex={1} backgroundColor={'$background'}>
       <StyledMapView
         showsUserLocation={true}
         showsCompass={true}
         showsMyLocationButton={true}
+        provider="google"
         minZoomLevel={12}
-        maxZoomLevel={15}
+        maxZoomLevel={17}
         initialCamera={{
           center: {
             latitude: coords.lat,
             longitude: coords.lng,
           },
           heading: 10,
-          pitch: 3,
-        }}
-      />
+          zoom: 14,
+          pitch: 10,
+        }}>
+        {!isLoading && !isError && data && data?.length > 0 && (
+          <>
+            {data.map((location) => (
+              <MapMarker key={location.id} location={location} />
+            ))}
+          </>
+        )}
+        {/* <Marker coordinate={{}} title='Marker' /> */}
+      </StyledMapView>
     </View>
   );
 }

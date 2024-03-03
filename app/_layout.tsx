@@ -11,6 +11,7 @@ import { useUserStore } from '~/stores/userStore';
 import onExitScripts from '~/utils/onExitScripts';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import BottomSheetLib from '~/components/BottomSheet';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 export const StylizedStack = ({ children }: { children?: React.ReactNode }) => {
   const theme = useTheme();
@@ -32,6 +33,8 @@ export const StylizedStack = ({ children }: { children?: React.ReactNode }) => {
     </Stack>
   );
 };
+
+const queryClient = new QueryClient();
 
 export default function Layout() {
   const [loaded] = useFonts({
@@ -60,13 +63,15 @@ export default function Layout() {
   return (
     <TamaguiProvider config={config}>
       <Theme name={colorScheme === 'dark' ? 'darkEcoLit' : 'lightEcoLit'}>
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <StylizedStack>
-            <Stack.Screen name="(app)" options={{ headerShown: false }} />
-            <Stack.Screen name="auth" options={{ headerShown: false }} />
-          </StylizedStack>
-          <BottomSheetLib />
-        </GestureHandlerRootView>
+        <QueryClientProvider client={queryClient}>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <StylizedStack>
+              <Stack.Screen name="(app)" options={{ headerShown: false }} />
+              <Stack.Screen name="auth" options={{ headerShown: false }} />
+            </StylizedStack>
+            <BottomSheetLib />
+          </GestureHandlerRootView>
+        </QueryClientProvider>
       </Theme>
     </TamaguiProvider>
   );

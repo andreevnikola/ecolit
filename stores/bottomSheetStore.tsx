@@ -17,10 +17,16 @@ export const useBottomSheetStore = create<IBottomSheetStore>((set) => ({
   snapPoints: ['80%'],
   content: <Text>Awesome 🎉</Text>,
   hideSheet: () => set({ isOpened: false }),
-  openSheet: (data: { snapPoints: any; content: JSX.Element }) =>
-    set({
-      snapPoints: data.snapPoints,
-      content: data.content,
-      isOpened: true,
-    }),
+  openSheet: (data: { snapPoints: any; content: JSX.Element }) => {
+    set({ isOpened: false });
+    setTimeout(
+      () =>
+        set({
+          snapPoints: data.snapPoints,
+          content: data.content,
+          isOpened: true,
+        }),
+      10
+    );
+  },
 }));
