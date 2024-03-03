@@ -41,7 +41,7 @@ export default function Auth() {
       options: {
         data: {
           full_name: firstName + ' ' + lastName,
-          avatar_url: getAvatar(firstName + ' ' + lastName),
+          avatar_url: getAvatar(firstName + lastName),
         },
       },
     });
