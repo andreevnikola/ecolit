@@ -1,13 +1,18 @@
 import { useCallback, useRef, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
-import { Avatar, View, Text, Image } from 'tamagui';
+import { Avatar, View, Text, Image, XGroup } from 'tamagui';
 import { useBottomSheetStore } from '~/stores/bottomSheetStore';
 import UserProfileSheetContent from './UserProfileSheetContent';
+import { getAvatar } from '~/utils/auth/getAvatar';
 
-export default function UserProfileIcon({ avatarUrl }: { avatarUrl: string }) {
+export default function UserProfileIcon({
+  avatarUrl,
+  email,
+}: {
+  avatarUrl: string;
+  email: string;
+}) {
   const openSheet = useBottomSheetStore((store) => store.openSheet);
-
-  console.log(avatarUrl);
 
   return (
     <View>
@@ -20,7 +25,9 @@ export default function UserProfileIcon({ avatarUrl }: { avatarUrl: string }) {
         }>
         <Avatar circular size="$3" mt={-5} mr={7}>
           <Avatar.Image src={avatarUrl} width={50} height={50} />
-          <Avatar.Fallback bc="$backgroundTint" />
+          <Avatar.Fallback bc="$backgroundTint">
+            <Image width={35} height={35} src={{ uri: getAvatar(email) }} />
+          </Avatar.Fallback>
         </Avatar>
       </TouchableOpacity>
     </View>

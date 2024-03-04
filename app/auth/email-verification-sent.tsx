@@ -15,6 +15,7 @@ const resendVerificationEmail = async (email: string) => {
       emailRedirectTo: redirectTo,
     },
   });
+
   if (error) Alert.alert(error.message);
   else Alert.alert('Провери си пощата. Пратили сме Ви нов линк за верификация!');
 };

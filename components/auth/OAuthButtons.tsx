@@ -67,13 +67,10 @@ export default function OAUthButtons() {
       return;
     }
 
-    console.log(data);
-
     const res = await WebBrowser.openAuthSessionAsync(data?.url ?? '', redirectTo);
 
     if (res.type === 'success') {
       const { url } = res;
-      console.log(res);
       const session = await createSessionFromUrl(url);
       if (session) {
         router.replace('/');

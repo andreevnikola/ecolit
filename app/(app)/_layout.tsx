@@ -8,10 +8,14 @@ import UserProfileIcon from '~/components/userProfile/UserProfileIcon';
 
 export const StylyzedTabs = ({
   children,
+  full_name,
   avatarUrl,
+  email,
 }: {
   children: React.ReactNode;
   avatarUrl: string;
+  full_name: string;
+  email: string;
 }) => {
   const theme = useTheme();
 
@@ -31,7 +35,7 @@ export const StylyzedTabs = ({
           borderBlockColor: theme.backgroundTint.get(),
         },
         tabBarActiveTintColor: theme.accent.get(),
-        headerRight: ({ tintColor }) => <UserProfileIcon avatarUrl={avatarUrl} />,
+        headerRight: ({ tintColor }) => <UserProfileIcon avatarUrl={avatarUrl} email={email} />,
       }}>
       {children}
     </Tabs>
@@ -44,7 +48,10 @@ export default function AppLayout() {
   if (!isLoading && !user) return <Redirect href={'/auth/getting-started'} />;
 
   return (
-    <StylyzedTabs avatarUrl={user ? user.avatarUrl : 'fsdajkfjls'}>
+    <StylyzedTabs
+      avatarUrl={user ? user.avatarUrl : 'fsdajkfjls'}
+      email={user?.email || 'fdasfsdaf'}
+      full_name={user?.fullName || 'fajsklfsjldk'}>
       <Tabs.Screen
         name="index"
         options={{

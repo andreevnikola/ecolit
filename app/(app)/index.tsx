@@ -1,4 +1,4 @@
-import { View, YStack, styled } from 'tamagui';
+import { View, YGroup, YStack, styled } from 'tamagui';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { Alert, AppState, BackHandler } from 'react-native';
@@ -7,9 +7,10 @@ import { useEffect, useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '~/utils/supabase';
 import { ILocation } from '~/types/location';
-import MapMarker from '~/components/MapMarker';
+import MapMarker from '~/components/map/MapMarker';
 
 import { ErrorText } from '~/tamagui.config';
+import CategoryPicker from '~/components/map/CategoryPicker';
 
 const fetchLocations = async (): Promise<ILocation[]> => {
   const { data, error } = await supabase
@@ -25,7 +26,8 @@ const fetchLocations = async (): Promise<ILocation[]> => {
       name,
       description,
       website,
-      logo_url
+      logo_url,
+      store_type
     )
   `
     )
@@ -117,32 +119,35 @@ export default function MapPage() {
     return <View flex={1} backgroundColor={'$background'} />;
 
   return (
-    <View flex={1} backgroundColor={'$background'}>
-      <StyledMapView
-        showsUserLocation={true}
-        showsCompass={true}
-        showsMyLocationButton={true}
-        provider="google"
-        minZoomLevel={12}
-        maxZoomLevel={17}
-        initialCamera={{
-          center: {
-            latitude: coords.lat,
-            longitude: coords.lng,
-          },
-          heading: 10,
-          zoom: 14,
-          pitch: 10,
-        }}>
-        {!isLoading && !isError && data && data?.length > 0 && (
-          <>
-            {data.map((location) => (
-              <MapMarker key={location.id} location={location} />
-            ))}
-          </>
-        )}
-        {/* <Marker coordinate={{}} title='Marker' /> */}
-      </StyledMapView>
-    </View>
+    <YGroup flex={1}>
+      <CategoryPicker />
+      <View flex={1} backgroundColor={'$background'}>
+        <StyledMapView
+          showsUserLocation={true}
+          showsCompass={true}
+          showsMyLocationButton={true}
+          provider="google"
+          minZoomLevel={12}
+          maxZoomLevel={17}
+          initialCamera={{
+            center: {
+              latitude: coords.lat,
+              longitude: coords.lng,
+            },
+            heading: 10,
+            zoom: 14,
+            pitch: 10,
+          }}>
+          {!isLoading && !isError && data && data?.length > 0 && (
+            <>
+              {data.map((location) => (
+                <MapMarker key={location.id} location={location} />
+              ))}
+            </>
+          )}
+          {/* <Marker coordinate={{}} title='Marker' /> */}
+        </StyledMapView>
+      </View>
+    </YGroup>
   );
 }

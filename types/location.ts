@@ -1,3 +1,5 @@
+import { StoreType } from './storeType';
+
 export interface ILocation {
   id: number;
   latitude: number;
@@ -9,5 +11,6 @@ export interface ILocation {
     description: string;
     website: string;
     logo_url: string;
+    store_type: StoreType | null;
   };
 }
