@@ -50,7 +50,7 @@ export default function MapMarker({ location }: { location: ILocation }) {
               alignItems="center"
               justifyContent="center"
               backgroundColor={`rgb(${storeTypeData.color})`}>
-              <Ionicons color="black" name={storeTypeData?.icon as any} size={'15'} />
+              <Ionicons color="black" name={storeTypeData?.icon as any} size={15} />
             </XGroup>
           )}
         </>

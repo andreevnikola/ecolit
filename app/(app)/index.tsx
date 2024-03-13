@@ -1,4 +1,4 @@
-import { View, YGroup, YStack, styled } from 'tamagui';
+import { Text, View, YGroup, YStack, styled } from 'tamagui';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { Alert, AppState, BackHandler } from 'react-native';
@@ -10,7 +10,7 @@ import { ILocation } from '~/types/location';
 import MapMarker from '~/components/map/MapMarker';
 
 import { ErrorText } from '~/tamagui.config';
-import CategoryPicker from '~/components/map/CategoryPicker';
+import CategoryPicker from '~/components/CategoryPicker';
 
 const fetchLocations = async (): Promise<ILocation[]> => {
   const { data, error } = await supabase
@@ -116,7 +116,11 @@ export default function MapPage() {
     );
 
   if (coords.lat === 0 && coords.lng === 0)
-    return <View flex={1} backgroundColor={'$background'} />;
+    return (
+      <View flex={1} backgroundColor={'$background'} alignItems="center" justifyContent="center">
+        <Text color={'$text'}>Зареждаме картата...</Text>
+      </View>
+    );
 
   return (
     <YGroup flex={1}>

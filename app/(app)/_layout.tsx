@@ -25,6 +25,14 @@ export const StylyzedTabs = ({
         headerStyle: {
           backgroundColor: theme.backgroundShade.get(),
         },
+        tabBarVisibilityAnimationConfig: {
+          show: {
+            animation: 'spring',
+          },
+          hide: {
+            animation: 'spring',
+          },
+        },
         headerTintColor: theme.primary.get(),
         headerTitleStyle: {
           fontWeight: 'bold',
@@ -56,9 +64,16 @@ export default function AppLayout() {
         name="index"
         options={{
           title: 'EcoLit',
-          // headerTitle: 'Карта',
           tabBarLabel: 'Карта',
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="map" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="coupons"
+        options={{
+          title: 'EcoLit',
+          tabBarLabel: 'Купони',
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="ticket" color={color} />,
         }}
       />
     </StylyzedTabs>
