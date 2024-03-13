@@ -120,7 +120,7 @@ export default function MapPage() {
 
   return (
     <YGroup flex={1}>
-      <CategoryPicker />
+      {/* <CategoryPicker /> */}
       <View flex={1} backgroundColor={'$background'}>
         <StyledMapView
           showsUserLocation={true}

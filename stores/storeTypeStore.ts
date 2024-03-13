@@ -3,15 +3,18 @@ import { create } from 'zustand';
 import { StoreType } from '~/types/storeType';
 import { IUser } from '~/types/user';
 
-export const getTypeDataFromName = (name: StoreType) => ({
-  color: typeToColorMapper.get(name)!,
-  type: name,
-  icon: typeToIconMapper.get(name)!,
-  additional: typeToAdditionalMapper.get(name)!,
-});
+export const getTypeDataFromName = (name: StoreType | null) =>
+  name
+    ? {
+        color: typeToColorMapper.get(name)!,
+        type: name,
+        icon: typeToIconMapper.get(name)!,
+        additional: typeToAdditionalMapper.get(name)!,
+      }
+    : null;
 
 export const storeTypesList: StoreType[] = [
-  'всичко',
+  'всички',
   'мегамаркет',
   'облекло',
   'ресторант',
@@ -21,7 +24,7 @@ export const storeTypesList: StoreType[] = [
 
 const typeToAdditionalMapper = new Map<StoreType, { title: string; description: string }>([
   [
-    'всичко',
+    'всички',
     {
       title: 'Всякакви стоки',
       description:
@@ -71,7 +74,7 @@ const typeToAdditionalMapper = new Map<StoreType, { title: string; description: 
 ]);
 
 const typeToIconMapper = new Map<StoreType, string>([
-  ['всичко', 'pricetags'],
+  ['всички', 'pricetags'],
   ['мегамаркет', 'cart-outline'],
   ['облекло', 'shirt-outline'],
   ['ресторант', 'fast-food-outline'],
@@ -80,7 +83,7 @@ const typeToIconMapper = new Map<StoreType, string>([
 ]);
 
 const typeToColorMapper = new Map([
-  ['всичко', '98, 204, 110'],
+  ['всички', '98, 204, 110'],
   ['мегамаркет', '75, 204, 191'],
   ['облекло', '102, 95, 199'],
   ['ресторант', '204, 140, 57'],
@@ -100,10 +103,10 @@ interface IStoreType {
 }
 
 export const useStoreTypeStore = create<IStoreType>((set) => ({
-  type: 'всичко',
-  color: typeToColorMapper.get('всичко')!,
-  icon: typeToIconMapper.get('всичко')!,
-  additional: typeToAdditionalMapper.get('всичко')!,
+  type: 'всички',
+  color: typeToColorMapper.get('всички')!,
+  icon: typeToIconMapper.get('всички')!,
+  additional: typeToAdditionalMapper.get('всички')!,
   setType: (newType: StoreType) =>
     set({
       type: newType,

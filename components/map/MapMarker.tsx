@@ -9,11 +9,13 @@ import { getTypeDataFromName } from '~/stores/storeTypeStore';
 export default function MapMarker({ location }: { location: ILocation }) {
   const openSheet = useBottomSheetStore((store) => store.openSheet);
 
-  const storeTypeData = getTypeDataFromName(location.place_info.store_type || 'всичко');
+  const storeTypeData = getTypeDataFromName(location.place_info.store_type);
 
   const onMarkerPress = () => {
+    console.log(location);
+
     openSheet({
-      content: <MapBottomSheet location={location} storeTypeData={storeTypeData} />,
+      content: <MapBottomSheet location={location} />,
       snapPoints: ['40%', '85%'],
     });
   };
@@ -38,12 +40,17 @@ export default function MapMarker({ location }: { location: ILocation }) {
               height={20}
             />
           </XGroup>
-          {location.type === 'store' && (
-            <XGroup width={30} height={30} borderRadius={100} marginLeft={35} marginTop={20}>
-              <Ionicons
-                color={'black'}
-                // name={getTypeDataFromName(location.place_info.store_type!).icon as any}
-              />
+          {storeTypeData && (
+            <XGroup
+              width={23}
+              height={23}
+              borderRadius={100}
+              marginLeft={34}
+              marginTop={20}
+              alignItems="center"
+              justifyContent="center"
+              backgroundColor={`rgb(${storeTypeData.color})`}>
+              <Ionicons color="black" name={storeTypeData?.icon as any} size={'15'} />
             </XGroup>
           )}
         </>

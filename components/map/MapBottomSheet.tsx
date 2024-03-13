@@ -10,18 +10,15 @@ const StyledIonicons = styled(Ionicons, {
   name: 'add',
 });
 
-export default function MapBottomSheet({
-  location,
-  storeTypeData,
-}: {
-  location: ILocation;
-  storeTypeData: any;
-}) {
+export default function MapBottomSheet({ location }: { location: ILocation }) {
   const uriScheme = Platform.select({
     ios: `maps://app?daddr=${location.latitude},${location.longitude}&dname=${location.place_info.name}`,
     android: `google.navigation:q=${location.latitude},${location.longitude}&label=${location.place_info.name}`,
     default: `https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}&destination_place_id=${location.place_info.name}`,
   });
+
+  const storeTypeData = getTypeDataFromName(location.place_info.store_type);
+
   console.log(location.place_info.store_type);
 
   const navigate = () => Linking.openURL(uriScheme);
@@ -85,7 +82,7 @@ export default function MapBottomSheet({
                 {location.place_info.description}
               </Text>
             </XGroup>
-            {storeTypeData && location.type !== 'bin' && (
+            {storeTypeData && (
               <>
                 <XGroup
                   gap={10}
