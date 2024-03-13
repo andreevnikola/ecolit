@@ -15,7 +15,7 @@ export default function CategoryPicker() {
 
   return (
     <View height={53}>
-      <ScrollView padding={7} backgroundColor={'$background'} borderRadius={0} horizontal>
+      <ScrollView padding={7} backgroundColor={'$backgroundShade'} borderRadius={0} horizontal>
         <XGroup gap={5}>
           {storeTypesList.map((name) => {
             const data = getTypeDataFromName(name);

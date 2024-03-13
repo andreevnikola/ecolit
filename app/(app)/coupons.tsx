@@ -2,7 +2,8 @@ import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { ButtonText, Image, ScrollView, Text, View, XGroup, YGroup, useTheme } from 'tamagui';
-import { getTypeDataFromName } from '~/stores/storeTypeStore';
+import CategoryPicker from '~/components/CategoryPicker';
+import { getTypeDataFromName, useStoreTypeStore } from '~/stores/storeTypeStore';
 import { Container, Strong, StyledButton, Title } from '~/tamagui.config';
 import ICoupon from '~/types/coupon';
 import { supabase } from '~/utils/supabase';
@@ -20,6 +21,7 @@ const fetchLocations = async (): Promise<ICoupon[]> => {
 
 export default function CouponsPage() {
   const [hasRefetched, setHasRefetched] = useState(false);
+  const showingType = useStoreTypeStore((state) => state.type);
   const theme = useTheme();
   const { isLoading, isError, data, error, refetch } = useQuery({
     queryKey: ['coupons'],
@@ -33,6 +35,7 @@ export default function CouponsPage() {
 
   return (
     <View flex={1}>
+      <CategoryPicker />
       <ScrollView flexGrow={1} backgroundColor={'$background'}>
         <Container padding={10} paddingTop={20}>
           <Title fontSize={40} marginBottom={30} color={'$textShade'}>
@@ -42,6 +45,9 @@ export default function CouponsPage() {
             {data &&
               data.length > 0 &&
               data.map((coupon: ICoupon) => {
+                if (showingType !== 'всички' && !coupon.store_type.includes(showingType))
+                  return <></>;
+
                 const storeTypes = coupon.store_type.map((type) => getTypeDataFromName(type));
 
                 return (
