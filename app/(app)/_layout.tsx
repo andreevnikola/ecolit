@@ -72,8 +72,16 @@ export default function AppLayout() {
         name="coupons"
         options={{
           title: 'EcoLit',
-          tabBarLabel: 'Купони',
+          tabBarLabel: 'Моите купони',
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="ticket" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="buyCoupon"
+        options={{
+          title: 'EcoLit',
+          tabBarLabel: 'Купи купон',
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="shopping-basket" color={color} />,
         }}
       />
     </StylyzedTabs>
