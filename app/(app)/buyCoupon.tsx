@@ -1,6 +1,6 @@
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ButtonText, Image, ScrollView, Text, View, XGroup, YGroup, useTheme } from 'tamagui';
 import CategoryPicker from '~/components/CategoryPicker';
 import { getTypeDataFromName, useStoreTypeStore } from '~/stores/storeTypeStore';
@@ -22,11 +22,16 @@ const fetchLocations = async (): Promise<ICoupon[]> => {
 export default function BuyCouponsPage() {
   const [hasRefetched, setHasRefetched] = useState(false);
   const showingType = useStoreTypeStore((state) => state.type);
+  const haveResults = useRef(false);
   const theme = useTheme();
   const { isLoading, isError, data, error, refetch } = useQuery({
     queryKey: ['coupons'],
     queryFn: fetchLocations,
   });
+
+  useEffect(() => {
+    haveResults.current = false;
+  }, [showingType]);
 
   if ((!data || data.length < 1) && !hasRefetched) {
     setHasRefetched(true);
@@ -45,9 +50,11 @@ export default function BuyCouponsPage() {
             {data &&
               data.length > 0 &&
               data.map((coupon: ICoupon) => {
-                if (showingType !== 'всички' && !coupon.store_type.includes(showingType))
+                if (showingType !== 'всички' && !coupon.store_type.includes(showingType)) {
                   return <View key={coupon.id}></View>;
+                }
 
+                haveResults.current = true;
                 const storeTypes = coupon.store_type.map((type) => getTypeDataFromName(type));
 
                 return (
@@ -158,6 +165,11 @@ export default function BuyCouponsPage() {
                   </View>
                 );
               })}
+            {!haveResults.current && (
+              <Text color={'$text'} textAlign="center">
+                Няма намерени резултати.
+              </Text>
+            )}
           </YGroup>
         </Container>
       </ScrollView>

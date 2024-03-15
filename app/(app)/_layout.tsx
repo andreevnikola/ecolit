@@ -1,10 +1,11 @@
 import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Redirect, Tabs } from 'expo-router';
-import { Avatar, useTheme } from 'tamagui';
+import { Avatar, XGroup, useTheme } from 'tamagui';
 import useUser from '~/hooks/useUser';
 import { IUser } from '~/types/user';
 import UserProfileIcon from '~/components/userProfile/UserProfileIcon';
+import EcoPointsDisplay from '~/components/userProfile/EcoPointsDisplay';
 
 export const StylyzedTabs = ({
   children,
@@ -34,8 +35,10 @@ export const StylyzedTabs = ({
           },
         },
         headerTintColor: theme.primary.get(),
+        headerTitleAlign: 'left',
         headerTitleStyle: {
-          fontWeight: 'bold',
+          fontWeight: 900,
+          fontSize: 23,
           color: theme.text.get(),
         },
         tabBarStyle: {
@@ -43,7 +46,12 @@ export const StylyzedTabs = ({
           borderBlockColor: theme.backgroundTint.get(),
         },
         tabBarActiveTintColor: theme.accent.get(),
-        headerRight: ({ tintColor }) => <UserProfileIcon avatarUrl={avatarUrl} email={email} />,
+        headerRight: ({ tintColor }) => (
+          <XGroup gap={8} alignItems="center" justifyContent="center">
+            <EcoPointsDisplay />
+            <UserProfileIcon avatarUrl={avatarUrl} email={email} />
+          </XGroup>
+        ),
       }}>
       {children}
     </Tabs>

@@ -1,4 +1,4 @@
-import { View, XGroup, YGroup, styled } from 'tamagui';
+import { View, XGroup, YGroup, styled, Image } from 'tamagui';
 import { Text } from 'tamagui';
 import useUser from '~/hooks/useUser';
 import { Strong } from '~/tamagui.config';
@@ -45,10 +45,12 @@ export default function UserProfileSheetContent() {
           <Text fontSize={30} color={'$primary'}>
             Баланс:
           </Text>
-          <Text fontSize={30} color={'$primary'}>
-            <Strong>0</Strong>
-            <Text fontSize={20}>т.</Text>
-          </Text>
+          <XGroup alignItems="center" gap={3}>
+            <Strong fontSize={30} color={'$primary'}>
+              {user?.points}
+            </Strong>
+            <Image src={require('~/assets/coin.png')} width={25} height={25} />
+          </XGroup>
         </XGroup>
       </YGroup>
       <SignOutButton />
