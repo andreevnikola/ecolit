@@ -10,7 +10,7 @@ const StyledText = styled(Text, {
 });
 
 export default function UserProfileSheetContent() {
-  const { user } = useUser();
+  const { user, points } = useUser();
 
   return (
     <View flex={1} padding={15}>
@@ -47,7 +47,7 @@ export default function UserProfileSheetContent() {
           </Text>
           <XGroup alignItems="center" gap={3}>
             <Strong fontSize={30} color={'$primary'}>
-              {user?.points}
+              {points}
             </Strong>
             <Image src={require('~/assets/coin.png')} width={25} height={25} />
           </XGroup>

@@ -19,8 +19,6 @@ export default function MapBottomSheet({ location }: { location: ILocation }) {
 
   const storeTypeData = getTypeDataFromName(location.place_info.store_type);
 
-  console.log(location.place_info.store_type);
-
   const navigate = () => Linking.openURL(uriScheme);
 
   return (

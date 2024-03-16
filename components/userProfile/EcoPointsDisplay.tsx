@@ -3,7 +3,7 @@ import { XGroup, Image } from 'tamagui';
 import useUser from '~/hooks/useUser';
 
 export default function EcoPointsDisplay() {
-  const { user, isLoading } = useUser();
+  const { user, isLoading, points } = useUser();
 
   if (isLoading) return <></>;
 
@@ -16,7 +16,7 @@ export default function EcoPointsDisplay() {
       marginTop={-3}
       alignItems="center">
       <Text color={'$text'} fontSize={14} fontWeight={'bold'}>
-        {user?.points}
+        {points}
       </Text>
       <Image src={require('~/assets/coin.png')} width={15} height={15} />
     </XGroup>

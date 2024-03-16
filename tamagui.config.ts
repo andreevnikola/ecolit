@@ -210,7 +210,7 @@ const config = createTamagui({
       neutral: '#bccfcd',
       background: '#F0FFFE',
       backgroundShade: '#e4eded',
-      backgroundTint: '#faffff',
+      backgroundTint: '#f0f2f2',
       backgroundTransparent: 'rgba(240, 255, 254, 0.59)',
       borderColor: '#cbd4d3',
       borderColorFocus: '#cbd4d3',

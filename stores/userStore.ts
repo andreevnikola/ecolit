@@ -18,6 +18,8 @@ interface IUserStore {
   points: number;
   setUser: (newUser: IUser | null) => void;
   structureAndSetUser: (rawUser: User | null) => void;
+  revalidatePoints: (id: string) => void;
+  usePoints: (usedPoints: number) => void;
 }
 
 async function getProfileFromDB(id: string | undefined): Promise<IProfile> {
@@ -51,15 +53,16 @@ export const useUserStore = create<IUserStore>((set) => ({
             firstName: rawUser.user_metadata.full_name.split(' ')[0],
             lastName: rawUser.user_metadata.full_name.split(' ')[1] || null,
             fullName: rawUser.user_metadata.full_name,
-            points: profile.points,
             id: rawUser?.id,
           }
         : null,
       isLoading: false,
+      points: profile.points,
     });
   },
   revalidatePoints: async (id: string) => {
     const points = (await getProfileFromDB(id)).points;
     set({ points: points });
   },
+  usePoints: (usedPoints: number) => set((state) => ({ points: state.points - usedPoints })),
 }));
