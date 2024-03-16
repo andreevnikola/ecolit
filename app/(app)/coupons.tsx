@@ -129,10 +129,13 @@ export default function CouponsPage() {
   };
 
   const [activeCoupons, setActiveCoupons] = useState<ICoupon[]>([]);
+  const [usedCoupons, setUsedCoupons] = useState<ICoupon[]>([]);
   useEffect(() => {
     if (data && Array.isArray(data) && data.length > 0) {
       const filteredItems = data!.filter((item) => item.is_active);
       setActiveCoupons(filteredItems.map((item) => item.coupon));
+      const filteredItemsForIsUsed = data!.filter((item) => !item.is_active);
+      setUsedCoupons(filteredItemsForIsUsed.map((item) => item.coupon));
     }
   }, [data]);
 
@@ -294,7 +297,7 @@ export default function CouponsPage() {
       <CategoryPicker />
       <ScrollView flexGrow={1} backgroundColor={'$background'}>
         <Container padding={10} paddingTop={20}>
-          <Title fontSize={40} marginBottom={30} color={'$textShade'}>
+          <Title fontSize={40} marginBottom={20} color={'$textShade'}>
             Активни купони
           </Title>
           {isLoading && (
@@ -314,6 +317,23 @@ export default function CouponsPage() {
                 useCoupon={useShowCoupon}
               />
             )}
+          <Title fontSize={30} marginBottom={20} marginTop={50} color={'$textShade'}>
+            Използвани купони
+          </Title>
+          {isLoading && (
+            <Text color={'$text'} textAlign="center">
+              Моля изчакайте...
+            </Text>
+          )}
+          {usedCoupons && Array.isArray(usedCoupons) && usedCoupons.length > 0 && !isLoading && (
+            <CouponsList
+              couponsType="used"
+              data={usedCoupons!}
+              isLoading={isLoading}
+              showingType={showingType}
+              useCoupon={useShowCoupon}
+            />
+          )}
         </Container>
       </ScrollView>
     </View>

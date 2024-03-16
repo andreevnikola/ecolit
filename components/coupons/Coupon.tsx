@@ -23,6 +23,8 @@ export function Coupon({
     <View
       key={Math.random()}
       padding={15}
+      opacity={couponsType === 'used' ? 0.5 : 1}
+      brig
       backgroundColor={'$backgroundShade'}
       borderStartStartRadius={7}
       borderStartEndRadius={7}
