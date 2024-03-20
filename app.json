@@ -5,7 +5,8 @@
     "version": "1.0.0",
     "scheme": "com.ecolit",
     "privacy": "public",
-    "description": "You get prices by recycling.",
+    "title": "EcoLit",
+    "description": "You recycle, you get points, you buy coupons.",
     "web": {
       "bundler": "metro",
       "output": "static",

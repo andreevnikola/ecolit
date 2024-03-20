@@ -92,6 +92,14 @@ export default function AppLayout() {
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="shopping-basket" color={color} />,
         }}
       />
+      <Tabs.Screen
+        name="recycle"
+        options={{
+          title: 'EcoLit',
+          tabBarLabel: 'Рециклирай',
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="recycle" color={color} />,
+        }}
+      />
     </StylyzedTabs>
   );
 }

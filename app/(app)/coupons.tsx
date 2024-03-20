@@ -320,10 +320,12 @@ export default function CouponsPage() {
               showingType={showingType}
               useCoupon={useShowCoupon}
             />
-          ) : (
+          ) : !isLoading ? (
             <Text color={'$text'} textAlign="center">
               Нямате активни купони
             </Text>
+          ) : (
+            <></>
           )}
           <Title fontSize={30} marginBottom={20} marginTop={50} color={'$textShade'}>
             Използвани купони
@@ -341,10 +343,12 @@ export default function CouponsPage() {
               showingType={showingType}
               useCoupon={useShowCoupon}
             />
-          ) : (
+          ) : !isLoading ? (
             <Text color={'$text'} textAlign="center">
               Нямате използвани купони
             </Text>
+          ) : (
+            <></>
           )}
         </Container>
       </ScrollView>
