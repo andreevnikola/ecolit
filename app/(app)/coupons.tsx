@@ -106,10 +106,13 @@ const StyledIonicons = styled(Ionicons, {
   name: 'add',
 });
 
+const webFuncitonalitiesUrl =
+  process.env.EXPO_PUBLIC_WEBFUNCTIONALITIES_URL || 'unknown webfunctionalities url';
+
 export default function CouponsPage() {
   const showingType = useStoreTypeStore((state) => state.type);
   const usePoints = useUserStore((state) => state.usePoints);
-  const [watchingItemId, setWatchingItemId] = useState<number | null>(null);
+  const [watchingItemCouponId, setwatchingItemCouponId] = useState<number | null>(null);
   const [data, setData] = useState<null | IItem[]>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -148,9 +151,7 @@ export default function CouponsPage() {
         return;
       }
 
-      console.log(id);
-
-      setWatchingItemId(id);
+      setwatchingItemCouponId(couponId);
 
       const item = await fetchCoupon(user!.id, id);
 
@@ -170,7 +171,7 @@ export default function CouponsPage() {
                   backgroundColor={'white'}
                   position="relative">
                   <QRCode
-                    value={`ecolit/${user?.id}:${id}`}
+                    value={`${webFuncitonalitiesUrl}/coupon/${couponId}/${user?.id}`}
                     logo={require('~/assets/icon.png')}
                     logoSize={40}
                     quietZone={10}
@@ -276,8 +277,11 @@ export default function CouponsPage() {
           // filter: `user=eq.${user!.id}`,
         },
         (payload) => {
-          if ((payload.new as any).id === watchingItemId)
-            useShowCoupon(watchingItemId!, (payload.new as any).id);
+          if (
+            (payload.new as any).coupon === watchingItemCouponId &&
+            (payload.new as any).user === user.id
+          )
+            useShowCoupon(watchingItemCouponId!, (payload.new as any).id);
           refetch();
         }
       )
@@ -286,7 +290,7 @@ export default function CouponsPage() {
     return () => {
       itemsChannel.unsubscribe();
     };
-  }, [watchingItemId]);
+  }, [watchingItemCouponId]);
 
   useEffect(() => {
     refetch();

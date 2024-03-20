@@ -7,4 +7,5 @@ export interface IItem {
   is_active: boolean;
   coupon: ICoupon;
   user: IUser;
+  used_at: Date;
 }

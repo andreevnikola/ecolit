@@ -12,8 +12,6 @@ export default function MapMarker({ location }: { location: ILocation }) {
   const storeTypeData = getTypeDataFromName(location.place_info.store_type);
 
   const onMarkerPress = () => {
-    console.log(location);
-
     openSheet({
       content: <MapBottomSheet location={location} />,
       snapPoints: ['40%', '85%'],

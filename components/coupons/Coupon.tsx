@@ -1,5 +1,5 @@
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
-import { View, YGroup, XGroup, ButtonText, useTheme, Text, Image } from 'tamagui';
+import { View, YGroup, XGroup, ButtonText, useTheme, Text, Image, SizableText } from 'tamagui';
 import { Strong, StyledButton } from '~/tamagui.config';
 import ICoupon from '~/types/coupon';
 import { StoreType } from '~/types/storeType';
