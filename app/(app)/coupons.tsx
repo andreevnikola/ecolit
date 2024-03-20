@@ -310,17 +310,21 @@ export default function CouponsPage() {
             </Text>
           )}
           {activeCoupons &&
-            Array.isArray(activeCoupons) &&
-            activeCoupons.length > 0 &&
-            !isLoading && (
-              <CouponsList
-                couponsType="active"
-                data={activeCoupons!}
-                isLoading={isLoading}
-                showingType={showingType}
-                useCoupon={useShowCoupon}
-              />
-            )}
+          Array.isArray(activeCoupons) &&
+          activeCoupons.length > 0 &&
+          !isLoading ? (
+            <CouponsList
+              couponsType="active"
+              data={activeCoupons!}
+              isLoading={isLoading}
+              showingType={showingType}
+              useCoupon={useShowCoupon}
+            />
+          ) : (
+            <Text color={'$text'} textAlign="center">
+              Нямате активни купони
+            </Text>
+          )}
           <Title fontSize={30} marginBottom={20} marginTop={50} color={'$textShade'}>
             Използвани купони
           </Title>
@@ -329,7 +333,7 @@ export default function CouponsPage() {
               Моля изчакайте...
             </Text>
           )}
-          {usedCoupons && Array.isArray(usedCoupons) && usedCoupons.length > 0 && !isLoading && (
+          {usedCoupons && Array.isArray(usedCoupons) && usedCoupons.length > 0 && !isLoading ? (
             <CouponsList
               couponsType="used"
               data={usedCoupons!}
@@ -337,6 +341,10 @@ export default function CouponsPage() {
               showingType={showingType}
               useCoupon={useShowCoupon}
             />
+          ) : (
+            <Text color={'$text'} textAlign="center">
+              Нямате използвани купони
+            </Text>
           )}
         </Container>
       </ScrollView>

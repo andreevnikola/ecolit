@@ -73,7 +73,7 @@ export default function OAUthButtons() {
       const { url } = res;
       const session = await createSessionFromUrl(url);
       if (session) {
-        router.replace('/');
+        setTimeout(() => router.replace('/'), 150);
       }
     }
   };
