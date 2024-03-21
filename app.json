@@ -57,6 +57,7 @@
     },
     "updates": {
       "url": "https://u.expo.dev/cc7e4e08-bcee-47a3-a220-37bdbb098246"
-    }
+    },
+    "releaseChannel": "default"
   }
 }

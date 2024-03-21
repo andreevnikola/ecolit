@@ -20,6 +20,7 @@ export const storeTypesList: StoreType[] = [
   'ресторант',
   'спорт',
   'храна',
+  'кафене',
 ];
 
 const typeToAdditionalMapper = new Map<StoreType, { title: string; description: string }>([
@@ -71,6 +72,14 @@ const typeToAdditionalMapper = new Map<StoreType, { title: string; description: 
         'На тази локация има хранителен магазин, в който можете да пазарувате с нашите ЕкоКупони. За него важат само EcoКупоните, предназначени за употреба в хранителни магазини.',
     },
   ],
+  [
+    'кафене',
+    {
+      title: 'Кафене',
+      description:
+        'На тази локация има кафене, в който можете да пазарувате с нашите ЕкоКупони. За него важат само EcoКупоните, предназначени за употреба в кафенета.',
+    },
+  ],
 ]);
 
 const typeToIconMapper = new Map<StoreType, string>([
@@ -80,6 +89,7 @@ const typeToIconMapper = new Map<StoreType, string>([
   ['ресторант', 'fast-food-outline'],
   ['спорт', 'baseball-outline'],
   ['храна', 'pizza-outline'],
+  ['кафене', 'cafe'],
 ]);
 
 const typeToColorMapper = new Map([
@@ -89,6 +99,7 @@ const typeToColorMapper = new Map([
   ['ресторант', '204, 140, 57'],
   ['спорт', '178, 247, 146'],
   ['храна', '210, 230, 122'],
+  ['кафене', '163, 18, 230'],
 ]);
 
 interface IStoreType {

@@ -37,6 +37,7 @@ const fetchCoupons = async (userId: string): Promise<IItem[]> => {
       id,
       bought_at,
       is_active,
+      used_at,
       coupon (
         id,
         title,
@@ -73,6 +74,7 @@ const fetchCoupon = async (userId: string, id: number) => {
         id,
         bought_at,
         is_active,
+        used_at,
         coupon (
           id,
           title,
@@ -132,13 +134,16 @@ export default function CouponsPage() {
   };
 
   const [activeCoupons, setActiveCoupons] = useState<ICoupon[]>([]);
-  const [usedCoupons, setUsedCoupons] = useState<ICoupon[]>([]);
+  const [usedItems, setusedItems] = useState<IItem[]>([]);
   useEffect(() => {
     if (data && Array.isArray(data) && data.length > 0) {
       const filteredItems = data!.filter((item) => item.is_active);
       setActiveCoupons(filteredItems.map((item) => item.coupon));
       const filteredItemsForIsUsed = data!.filter((item) => !item.is_active);
-      setUsedCoupons(filteredItemsForIsUsed.map((item) => item.coupon));
+      const sorted = filteredItemsForIsUsed.sort(
+        (a, b) => new Date(b.used_at) - new Date(a.used_at)
+      );
+      setusedItems(sorted);
     }
   }, [data]);
 
@@ -335,13 +340,14 @@ export default function CouponsPage() {
               Моля изчакайте...
             </Text>
           )}
-          {usedCoupons && Array.isArray(usedCoupons) && usedCoupons.length > 0 && !isLoading ? (
+          {usedItems && Array.isArray(usedItems) && usedItems.length > 0 && !isLoading ? (
             <CouponsList
               couponsType="used"
-              data={usedCoupons!}
+              data={usedItems.map((item) => item.coupon)!}
               isLoading={isLoading}
               showingType={showingType}
               useCoupon={useShowCoupon}
+              items={usedItems}
             />
           ) : !isLoading ? (
             <Text color={'$text'} textAlign="center">

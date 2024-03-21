@@ -10,6 +10,8 @@ import { StyleSheet } from 'react-native';
 export default function MapMarker({ location }: { location: ILocation }) {
   const openSheet = useBottomSheetStore((store) => store.openSheet);
 
+  console.log('gay');
+
   const storeTypeData = getTypeDataFromName(location.place_info.store_type);
 
   const onMarkerPress = () => {

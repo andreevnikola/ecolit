@@ -1,11 +1,12 @@
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
-import { useEffect, useRef } from 'react';
+import { ReactElement, useEffect, useRef } from 'react';
 import { View, YGroup, XGroup, ButtonText, useTheme, Text, Image } from 'tamagui';
 import { Strong, StyledButton } from '~/tamagui.config';
 import ICoupon from '~/types/coupon';
 import { StoreType } from '~/types/storeType';
 import { Coupon } from './Coupon';
 import { getTypeDataFromName } from '~/stores/storeTypeStore';
+import { IItem } from '~/types/item';
 
 export function CouponsList({
   data,
@@ -14,6 +15,8 @@ export function CouponsList({
   useCoupon,
   couponsType,
   isLoading,
+  extendingElement,
+  items,
 }: {
   data: ICoupon[] | null | undefined;
   showingType: StoreType;
@@ -21,6 +24,8 @@ export function CouponsList({
   buyCoupon?: (id: number, title: string, price: number) => void;
   useCoupon?: (id: number) => void;
   couponsType: 'used' | 'store' | 'active' | 'preview';
+  extendingElement?: ReactElement;
+  items?: IItem[];
 }) {
   const haveResults = useRef(false);
 
@@ -31,7 +36,7 @@ export function CouponsList({
     <YGroup gap={15} flex={1}>
       {data &&
         data.length > 0 &&
-        data.map((coupon: ICoupon) => {
+        data.map((coupon: ICoupon, i: number) => {
           if (showingType !== 'всички' && !coupon.store_type.includes(showingType)) {
             return;
           }
@@ -40,14 +45,17 @@ export function CouponsList({
           const storeTypes = coupon.store_type.map((type) => getTypeDataFromName(type));
 
           return (
-            <Coupon
-              couponsType={couponsType}
-              coupon={coupon}
-              storeTypes={storeTypes}
-              key={Math.random()}
-              buyCoupon={buyCoupon}
-              useCoupon={useCoupon}
-            />
+            <YGroup gap={2} key={Math.random()}>
+              <Coupon
+                couponsType={couponsType}
+                coupon={coupon}
+                storeTypes={storeTypes}
+                buyCoupon={buyCoupon}
+                useCoupon={useCoupon}
+                item={items[i]}
+              />
+              {extendingElement}
+            </YGroup>
           );
         })}
       {isLoading && (
