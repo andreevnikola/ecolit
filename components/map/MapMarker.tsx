@@ -5,6 +5,7 @@ import { ILocation } from '~/types/location';
 import MapBottomSheet from './MapBottomSheet';
 import { Ionicons } from '@expo/vector-icons';
 import { getTypeDataFromName } from '~/stores/storeTypeStore';
+import { StyleSheet } from 'react-native';
 
 export default function MapMarker({ location }: { location: ILocation }) {
   const openSheet = useBottomSheetStore((store) => store.openSheet);
@@ -25,12 +26,27 @@ export default function MapMarker({ location }: { location: ILocation }) {
         latitude: location.latitude,
         longitude: location.longitude,
       }}
-      image={
-        location.type === 'bin' ? require('~/assets/trash_bin.png') : require('~/assets/store.png')
-      }>
+      image={undefined}
+      // image={
+      //   location.type === 'bin'
+      //     ? require('~/assets/trash_bin.png')
+      //     : require('~/assets/store.png')
+      // }>
+    >
       {location.place_info.logo_url && (
-        <>
-          <XGroup width={20} height={20} borderRadius={3}>
+        <View width={65} height={78} flex={1} justifyContent="center" alignItems="center">
+          <View marginLeft={-5} marginTop={-5}>
+            <Image
+              width={50}
+              height={location.type === 'bin' ? 58 : 62}
+              src={
+                location.type === 'bin'
+                  ? require('~/assets/trash_bin.png')
+                  : require('~/assets/store.png')
+              }
+            />
+          </View>
+          <XGroup width={20} height={20} borderRadius={3} top={5} left={4} position="absolute">
             <Image
               source={{ uri: location.place_info.logo_url }}
               resizeMode="contain"
@@ -43,15 +59,16 @@ export default function MapMarker({ location }: { location: ILocation }) {
               width={23}
               height={23}
               borderRadius={100}
-              marginLeft={34}
-              marginTop={20}
+              left={39}
+              top={50}
               alignItems="center"
               justifyContent="center"
+              position="absolute"
               backgroundColor={`rgb(${storeTypeData.color})`}>
               <Ionicons color="black" name={storeTypeData?.icon as any} size={15} />
             </XGroup>
           )}
-        </>
+        </View>
       )}
     </Marker>
   );

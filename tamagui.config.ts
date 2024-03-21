@@ -46,7 +46,6 @@ export const Container = styled(YStack, {
 export const Main = styled(YStack, {
   flex: 1,
   justifyContent: 'space-between',
-  maxWidth: 960,
 });
 
 export const Title = styled(H1, {
@@ -110,7 +109,6 @@ export const StyledButton = styled(XStack, {
     backgroundColor: '$primaryPress',
   },
   justifyContent: 'center',
-  maxWidth: 500,
   padding: 16,
   shadowColor: '#000',
   shadowOffset: {

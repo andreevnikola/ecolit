@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Link, Stack, useRouter } from 'expo-router';
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, YStack } from 'tamagui';
 
 import { ButtonText, Container, Href, Main, Strong, Subtitle, Title } from '../../tamagui.config';
@@ -12,6 +12,7 @@ import * as WebBrowser from 'expo-web-browser';
 import * as Linking from 'expo-linking';
 import { supabase } from '../../utils/supabase';
 import { Alert } from 'react-native';
+import Loader from '../Loader';
 
 WebBrowser.maybeCompleteAuthSession(); // required for web only
 const redirectTo = makeRedirectUri();
@@ -21,6 +22,8 @@ export default function OAUthButtons() {
   const url = Linking.useURL();
 
   const router = useRouter();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const createSessionFromUrl = async (url: string) => {
     const { params, errorCode } = QueryParams.getQueryParams(url);
@@ -73,35 +76,42 @@ export default function OAUthButtons() {
       const { url } = res;
       const session = await createSessionFromUrl(url);
       if (session) {
-        setTimeout(() => router.replace('/'), 350);
+        setIsLoading(true);
+        setTimeout(() => {
+          setIsLoading(false);
+          router.replace('/');
+        }, 350);
       }
     }
   };
 
   return (
-    <YStack gap={10}>
-      <StyledButton
-        roundness="small"
-        onPressOut={() => performOAuth('google')}
-        backgroundColor={'#dd4d3f'}
-        pressStyle={{ backgroundColor: '#eb5b4d' }}
-        focusStyle={{ backgroundColor: '#eb5b4d' }}>
-        <Ionicons name="logo-google" size={20} color={'white'} />
-        <ButtonText>
-          Впиши се чрез <Text fontWeight={'bold'}>Google</Text>
-        </ButtonText>
-      </StyledButton>
-      <StyledButton
-        roundness="small"
-        onPressOut={() => performOAuth('facebook')}
-        backgroundColor={'#4267B2'}
-        pressStyle={{ backgroundColor: '#567bc7' }}
-        focusStyle={{ backgroundColor: '#567bc7' }}>
-        <Ionicons name="logo-facebook" size={20} color={'white'} />
-        <ButtonText>
-          Впиши се чрез <Text fontWeight={'bold'}>Facebook</Text>
-        </ButtonText>
-      </StyledButton>
-    </YStack>
+    <>
+      <YStack gap={10}>
+        <StyledButton
+          roundness="small"
+          onPressOut={() => performOAuth('google')}
+          backgroundColor={'#dd4d3f'}
+          pressStyle={{ backgroundColor: '#eb5b4d' }}
+          focusStyle={{ backgroundColor: '#eb5b4d' }}>
+          <Ionicons name="logo-google" size={20} color={'white'} />
+          <ButtonText>
+            Впиши се чрез <Text fontWeight={'bold'}>Google</Text>
+          </ButtonText>
+        </StyledButton>
+        <StyledButton
+          roundness="small"
+          onPressOut={() => performOAuth('facebook')}
+          backgroundColor={'#4267B2'}
+          pressStyle={{ backgroundColor: '#567bc7' }}
+          focusStyle={{ backgroundColor: '#567bc7' }}>
+          <Ionicons name="logo-facebook" size={20} color={'white'} />
+          <ButtonText>
+            Впиши се чрез <Text fontWeight={'bold'}>Facebook</Text>
+          </ButtonText>
+        </StyledButton>
+      </YStack>
+      {isLoading && <Loader isLoading={isLoading} />}
+    </>
   );
 }

@@ -12,6 +12,7 @@ import onExitScripts from '~/utils/onExitScripts';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import BottomSheetLib from '~/components/BottomSheet';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import Loader from '~/components/Loader';
 
 export const StylizedStack = ({ children }: { children?: React.ReactNode }) => {
   const theme = useTheme();
