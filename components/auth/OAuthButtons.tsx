@@ -80,7 +80,7 @@ export default function OAUthButtons() {
         setTimeout(() => {
           setIsLoading(false);
           router.replace('/');
-        }, 350);
+        }, 550);
       }
     }
   };
@@ -111,7 +111,7 @@ export default function OAUthButtons() {
           </ButtonText>
         </StyledButton>
       </YStack>
-      {isLoading && <Loader isLoading={isLoading} />}
+      <Loader isLoading={isLoading} />
     </>
   );
 }

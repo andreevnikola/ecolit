@@ -11,6 +11,7 @@ import { Alert, StyleSheet } from 'react-native';
 import { supabase } from '~/utils/supabase';
 import { DismissKeyboardView } from '~/components/DismissKeyboardHOC';
 import { getAvatar } from '~/utils/auth/getAvatar';
+import Loader from '~/components/Loader';
 
 export default function Auth() {
   const [email, setEmail] = useState('');
@@ -18,6 +19,7 @@ export default function Auth() {
   const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isLoadingLoginResult, setIsLoadingLoginResult] = useState(false);
 
   const router = useRouter();
 
@@ -52,65 +54,74 @@ export default function Auth() {
       return;
     }
     if (!session) router.push(`/auth/email-verification-sent?email=${email}`);
-    else router.replace('/');
+    else {
+      setIsLoadingLoginResult(true);
+      setTimeout(() => {
+        setIsLoadingLoginResult(false);
+        router.replace('/');
+      }, 550);
+    }
   }
 
   return (
-    <Container>
-      <Stack.Screen options={{ title: 'Регистрирай се', headerLeft: () => <BackButton /> }} />
-      <AuthContainer page="register">
-        <View style={styles.container}>
-          <YGroup gap={20}>
-            <YGroup gap={5}>
-              <View style={[styles.verticallySpaced, styles.mt20]}>
-                <Input
-                  onChangeText={(text) => setEmail(text)}
-                  value={email}
-                  placeholder="E-Mail: "
-                  autoCapitalize={'none'}
-                />
-              </View>
-              <XGroup gap={5} flex={1} style={[styles.verticallySpaced, styles.mt20]}>
-                <View flexGrow={1} flex={1} backgroundColor={'$background'}>
+    <>
+      <Container>
+        <Stack.Screen options={{ title: 'Регистрирай се', headerLeft: () => <BackButton /> }} />
+        <AuthContainer page="register">
+          <View style={styles.container}>
+            <YGroup gap={20}>
+              <YGroup gap={5}>
+                <View style={[styles.verticallySpaced, styles.mt20]}>
                   <Input
-                    onChangeText={(text) => setFirstName(text)}
-                    value={firstName}
-                    placeholder="Малко име:"
+                    onChangeText={(text) => setEmail(text)}
+                    value={email}
+                    placeholder="E-Mail: "
                     autoCapitalize={'none'}
-                    flex={1}
                   />
                 </View>
-                <View flexGrow={1} flex={1} backgroundColor={'$background'}>
+                <XGroup gap={5} flex={1} style={[styles.verticallySpaced, styles.mt20]}>
+                  <View flexGrow={1} flex={1} backgroundColor={'$background'}>
+                    <Input
+                      onChangeText={(text) => setFirstName(text)}
+                      value={firstName}
+                      placeholder="Име:"
+                      autoCapitalize={'none'}
+                      flex={1}
+                    />
+                  </View>
+                  <View flexGrow={1} flex={1} backgroundColor={'$background'}>
+                    <Input
+                      onChangeText={(text) => setLastName(text)}
+                      value={lastName}
+                      placeholder="Фамилно име:"
+                      autoCapitalize={'none'}
+                      flex={1}
+                    />
+                  </View>
+                </XGroup>
+                <View style={styles.verticallySpaced}>
                   <Input
-                    onChangeText={(text) => setLastName(text)}
-                    value={lastName}
-                    placeholder="Фамилно име:"
+                    onChangeText={(text) => setPassword(text)}
+                    value={password}
+                    secureTextEntry={true}
+                    placeholder="Парола: "
                     autoCapitalize={'none'}
-                    flex={1}
                   />
                 </View>
-              </XGroup>
-              <View style={styles.verticallySpaced}>
-                <Input
-                  onChangeText={(text) => setPassword(text)}
-                  value={password}
-                  secureTextEntry={true}
-                  placeholder="Парола: "
-                  autoCapitalize={'none'}
-                />
-              </View>
+              </YGroup>
+              <YGroup gap={7}>
+                <View style={styles.verticallySpaced}>
+                  <StyledButton disabled={loading} onPress={() => signUpWithEmail()}>
+                    <ButtonText>Регистрирай се</ButtonText>
+                  </StyledButton>
+                </View>
+              </YGroup>
             </YGroup>
-            <YGroup gap={7}>
-              <View style={styles.verticallySpaced}>
-                <StyledButton disabled={loading} onPress={() => signUpWithEmail()}>
-                  <ButtonText>Регистрирай се</ButtonText>
-                </StyledButton>
-              </View>
-            </YGroup>
-          </YGroup>
-        </View>
-      </AuthContainer>
-    </Container>
+          </View>
+        </AuthContainer>
+      </Container>
+      <Loader isLoading={isLoadingLoginResult} />
+    </>
   );
 }
 

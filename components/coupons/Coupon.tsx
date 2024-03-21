@@ -97,7 +97,7 @@ export function Coupon({
           </XGroup>
           <XGroup gap={3} alignItems="center">
             <Text color={'$accent'} fontSize={20}>
-              Намал. <Strong>{coupon.percent}</Strong>%.
+              Отстъпка <Strong>{coupon.percent}</Strong>%.
             </Text>
           </XGroup>
           <XGroup gap={3} alignItems="center">
