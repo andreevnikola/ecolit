@@ -1,6 +1,6 @@
 import { Main, ScrollView, View } from 'tamagui';
 import CategoryPicker from '~/components/CategoryPicker';
-import { Container } from '~/tamagui.config';
+import { Container, Title } from '~/tamagui.config';
 
 export default function RecyclePage() {
   return (
