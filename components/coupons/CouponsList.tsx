@@ -52,7 +52,7 @@ export function CouponsList({
                 storeTypes={storeTypes}
                 buyCoupon={buyCoupon}
                 useCoupon={useCoupon}
-                item={items[i]}
+                item={items && Array.isArray(items) && items.length > 0 ? items[i] : undefined}
               />
               {extendingElement}
             </YGroup>
