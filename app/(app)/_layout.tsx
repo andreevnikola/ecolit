@@ -79,7 +79,8 @@ export default function AppLayout() {
           // filter: `user=eq.${user!.id}`,
         },
         (payload) => {
-          if ((payload.new as any).id === user.id) gainPoints((payload.new as any).points - points);
+          if ((payload.new as any).id === user.id && points < (payload.new as any).points)
+            gainPoints((payload.new as any).points - points);
         }
       )
       .subscribe();
