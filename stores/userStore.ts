@@ -16,10 +16,13 @@ interface IUserStore {
   isLoading: boolean;
   id: string | undefined;
   points: number;
+  gainedPoints: number;
   setUser: (newUser: IUser | null) => void;
   structureAndSetUser: (rawUser: User | null) => void;
   revalidatePoints: (id: string) => void;
   usePoints: (usedPoints: number) => void;
+  gainPoints: (gainedPoints: number) => void;
+  resetGains: () => void;
 }
 
 async function getProfileFromDB(id: string | undefined): Promise<IProfile> {
@@ -41,6 +44,7 @@ export const useUserStore = create<IUserStore>((set) => ({
   isLoading: true,
   id: undefined,
   points: 0,
+  gainedPoints: 0,
   setUser: (newUser: IUser | null) => set({ user: newUser }),
   structureAndSetUser: async (rawUser: User | null) => {
     const profile = await getProfileFromDB(rawUser?.id);
@@ -65,4 +69,7 @@ export const useUserStore = create<IUserStore>((set) => ({
     set({ points: points });
   },
   usePoints: (usedPoints: number) => set((state) => ({ points: state.points - usedPoints })),
+  gainPoints: (gainedPoints: number) =>
+    set((state) => ({ points: state.points + gainedPoints, gainedPoints: gainedPoints })),
+  resetGains: () => set((state) => ({ gainedPoints: 0 })),
 }));

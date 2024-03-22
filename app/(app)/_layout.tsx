@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Redirect, Tabs } from 'expo-router';
 import { Avatar, XGroup, useTheme } from 'tamagui';
@@ -6,6 +6,8 @@ import useUser from '~/hooks/useUser';
 import { IUser } from '~/types/user';
 import UserProfileIcon from '~/components/userProfile/UserProfileIcon';
 import EcoPointsDisplay from '~/components/userProfile/EcoPointsDisplay';
+import { supabase } from '~/utils/supabase';
+import { useUserStore } from '~/stores/userStore';
 
 export const StylyzedTabs = ({
   children,
@@ -59,7 +61,33 @@ export const StylyzedTabs = ({
 };
 
 export default function AppLayout() {
-  const { isLoading, user } = useUser();
+  const { isLoading, user, points } = useUser();
+
+  const gainPoints = useUserStore((state) => state.gainPoints);
+
+  useEffect(() => {
+    if (isLoading || !user) return;
+
+    const userChannel = supabase
+      .channel('user_db_changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'users',
+          // filter: `user=eq.${user!.id}`,
+        },
+        (payload) => {
+          if ((payload.new as any).id === user.id) gainPoints((payload.new as any).points - points);
+        }
+      )
+      .subscribe();
+
+    return () => {
+      userChannel.unsubscribe();
+    };
+  }, [user]);
 
   if (!isLoading && !user) return <Redirect href={'/auth/getting-started'} />;
 
