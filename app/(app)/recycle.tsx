@@ -40,7 +40,7 @@ export default function RecyclePage() {
 
     resetGains();
 
-    setLatelyGained([...latelyGained, gainedPoints]);
+    setLatelyGained([gainedPoints, ...latelyGained]);
   }, [gainedPoints]);
 
   return (
@@ -53,7 +53,7 @@ export default function RecyclePage() {
           {latelyGained.map((gained) => (
             <XGroup
               justifyContent="space-between"
-              key={gained}
+              key={Math.random()}
               alignItems="center"
               borderRadius={3}
               backgroundColor={'$secondary'}
@@ -96,7 +96,7 @@ export default function RecyclePage() {
               logoSize={40}
               quietZone={10}
               color={theme.$primary.get()}
-              size={200}
+              size={230}
             />
           </XGroup>
 

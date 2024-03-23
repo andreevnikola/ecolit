@@ -166,6 +166,9 @@ export default function CouponsPage() {
 
       openSheet({
         snapPoints: ['70%'],
+        onExit: () => {
+          setwatchingItemCouponId(null);
+        },
         content: (
           <View flex={1} padding={15} paddingTop={22} paddingBottom={25}>
             <ScrollView flex={1}>
@@ -285,8 +288,9 @@ export default function CouponsPage() {
           if (
             (payload.new as any).coupon === watchingItemCouponId &&
             (payload.new as any).user === user.id
-          )
+          ) {
             useShowCoupon(watchingItemCouponId!, (payload.new as any).id);
+          }
           refetch();
         }
       )

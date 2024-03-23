@@ -88,7 +88,7 @@ export default function AppLayout() {
     return () => {
       userChannel.unsubscribe();
     };
-  }, [user]);
+  }, [points]);
 
   if (!isLoading && !user) return <Redirect href={'/auth/getting-started'} />;
 
