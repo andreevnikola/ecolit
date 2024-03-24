@@ -10,8 +10,6 @@ import { StyleSheet } from 'react-native';
 export default function MapMarker({ location }: { location: ILocation }) {
   const openSheet = useBottomSheetStore((store) => store.openSheet);
 
-  console.log('gay');
-
   const storeTypeData = getTypeDataFromName(location.place_info.store_type);
 
   const onMarkerPress = () => {
@@ -36,11 +34,11 @@ export default function MapMarker({ location }: { location: ILocation }) {
       // }>
     >
       {location.place_info.logo_url && (
-        <View width={65} height={78} flex={1} justifyContent="center" alignItems="center">
-          <View marginLeft={-5} marginTop={-5}>
+        <View width={57} height={63} flex={1} justifyContent="center" alignItems="center">
+          <View marginLeft={-2} marginTop={-4}>
             <Image
-              width={50}
-              height={location.type === 'bin' ? 58 : 62}
+              width={40}
+              height={location.type === 'bin' ? 49 : 51}
               src={
                 location.type === 'bin'
                   ? require('~/assets/trash_bin.png')
@@ -48,26 +46,26 @@ export default function MapMarker({ location }: { location: ILocation }) {
               }
             />
           </View>
-          <XGroup width={20} height={20} borderRadius={3} top={5} left={4} position="absolute">
+          <XGroup width={20} height={20} borderRadius={3} top={1} left={1} position="absolute">
             <Image
               source={{ uri: location.place_info.logo_url }}
               resizeMode="contain"
-              width={20}
-              height={20}
+              width={18}
+              height={18}
             />
           </XGroup>
           {storeTypeData && (
             <XGroup
-              width={23}
-              height={23}
+              width={20}
+              height={20}
               borderRadius={100}
-              left={39}
-              top={50}
+              left={34}
+              top={42}
               alignItems="center"
               justifyContent="center"
               position="absolute"
               backgroundColor={`rgb(${storeTypeData.color})`}>
-              <Ionicons color="black" name={storeTypeData?.icon as any} size={15} />
+              <Ionicons color="black" name={storeTypeData?.icon as any} size={12} />
             </XGroup>
           )}
         </View>

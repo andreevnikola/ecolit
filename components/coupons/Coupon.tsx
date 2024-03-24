@@ -73,7 +73,7 @@ export function Coupon({
                             : ', ')}
                     </Strong>
                   ))}
-              . Най-голямата отстъпка която този купон може да ви усигори е {coupon.limit}лв.
+              . Най-голямата отстъпка която този купон може да ви осигори е {coupon.limit}лв.
             </Text>
           </View>
           <XGroup justifyContent="space-between" alignItems="center">

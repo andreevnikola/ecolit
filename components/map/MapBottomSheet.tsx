@@ -180,7 +180,7 @@ export default function MapBottomSheet({ location }: { location: ILocation }) {
               backgroundColor={'$accent'}>
               <Ionicons name="compass-outline" size={22} color={'white'} />
               <ButtonText flexGrow={1} textAlign="center" fontWeight={'bold'} fontSize={15}>
-                Марширут до локация
+                Маршрут до локация
               </ButtonText>
             </StyledButton>
           </YGroup>
